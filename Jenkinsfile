@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-login')
-        DOCKER_IMAGE = 'thiru2003/flask-cicd'
+        DOCKER_IMAGE = 'thiru2003/flask-app'
     }
 
     stages {

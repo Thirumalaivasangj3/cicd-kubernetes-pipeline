@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-container
-        image: thiru2003/flask-cicd:latest
+        image: thiru2003/flask-app:latest
         ports:
         - containerPort: 5000
+s
