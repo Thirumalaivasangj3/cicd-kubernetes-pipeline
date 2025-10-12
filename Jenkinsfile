@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Cloning repository..."
-                git 'https://github.com/Thirumalaivasangj3/cicd-kubernetes-pipeline.git'
+                echo "Cloning repository from main branch..."
+                git branch: 'main', url: 'https://github.com/Thirumalaivasangj3/cicd-kubernetes-pipeline.git'
             }
         }
 
