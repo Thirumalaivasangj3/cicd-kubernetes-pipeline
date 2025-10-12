@@ -17,23 +17,31 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                sh 'docker build -t $DOCKER_IMAGE:latest ./app'
+                sh '''
+                    docker build -t $DOCKER_IMAGE:latest ./app
+                    docker tag $DOCKER_IMAGE:latest $DOCKER_IMAGE:${BUILD_NUMBER}
+                '''
             }
         }
 
         stage('Push to DockerHub') {
             steps {
                 echo "Pushing image to DockerHub..."
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push $DOCKER_IMAGE:latest'
+                sh '''
+                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    docker push $DOCKER_IMAGE:latest
+                    docker push $DOCKER_IMAGE:${BUILD_NUMBER}
+                '''
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying to Kubernetes..."
-                sh 'kubectl apply -f ./k8s/deployment.yaml'
-                sh 'kubectl apply -f ./k8s/service.yaml'
+                sh '''
+                    kubectl apply -f ./k8s/deployment.yaml
+                    kubectl apply -f ./k8s/service.yaml
+                '''
             }
         }
     }

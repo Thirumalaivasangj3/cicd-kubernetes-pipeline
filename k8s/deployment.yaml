@@ -17,4 +17,3 @@ spec:
         image: thiru2003/flask-app:latest
         ports:
         - containerPort: 5000
-s
