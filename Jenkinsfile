@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Cloning repository..."
+                echo "Cloning repository from main branch..."
                 git branch: 'main', url: 'https://github.com/Thirumalaivasangj3/cicd-kubernetes-pipeline.git'
             }
         }
@@ -29,7 +29,6 @@ pipeline {
                 echo "Pushing image to DockerHub..."
                 sh '''
                     echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                    docker info
                     docker push $DOCKER_IMAGE:latest
                     docker push $DOCKER_IMAGE:${BUILD_NUMBER}
                 '''
